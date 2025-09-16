@@ -100,7 +100,7 @@ class NanoBananaGeminiImageNode:
         system_prompt: str = "",
         images: Optional[torch.Tensor] = None,
         api_key: str = "",
-        base_url: string = "https://ai.ssnai.com/gemini"
+        base_url: string = "https://ai.ssnai.com/gemini",
         top_p: float = 0.95,
         max_tokens: int = 2048
     ) -> Tuple[torch.Tensor, str]:
