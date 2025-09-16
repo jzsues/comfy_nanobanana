@@ -4,6 +4,7 @@ import traceback
 import torch
 from typing import Optional, List, Tuple, Dict, Any
 from .gemini_api import GeminiAPIClient
+from google.genai import types
 import comfy.utils
 from comfy.utils import ProgressBar
 
@@ -58,6 +59,13 @@ class NanoBananaGeminiImageNode:
                     "dynamicPrompts": False,
                     "password": True
                 }),
+                "base_url": ("STRING", {
+                    "default": "",
+                    "tooltip": "Gemini API base url",
+                    "multiline": False,
+                    "dynamicPrompts": False,
+                    "password": False
+                }),
                 "top_p": ("FLOAT", {
                     "default": 0.95,
                     "min": 0.0,
@@ -92,6 +100,7 @@ class NanoBananaGeminiImageNode:
         system_prompt: str = "",
         images: Optional[torch.Tensor] = None,
         api_key: str = "",
+        base_url: string = "https://ai.ssnai.com/gemini"
         top_p: float = 0.95,
         max_tokens: int = 2048
     ) -> Tuple[torch.Tensor, str]:
@@ -114,7 +123,11 @@ class NanoBananaGeminiImageNode:
             raise ValueError("API key appears to be invalid (too short). Please check your API key.")
         
         try:
-            client = GeminiAPIClient(api_key=api_key)
+            http_options = types.HttpOptions(
+                api_version="v1beta",
+                base_url=base_url,
+            )
+            client = GeminiAPIClient(api_key=api_key, http_options=http_options)
             
             image_list = None
             if images is not None:
