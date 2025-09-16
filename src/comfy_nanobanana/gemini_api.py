@@ -20,7 +20,7 @@ QUOTA_ERRORS = ["RESOURCE_EXHAUSTED", "quota"]
 class GeminiAPIClient:
     """Client for interacting with Google Gemini API."""
     
-    def __init__(self, api_key: Optional[str] = None, max_retries: int = DEFAULT_MAX_RETRIES, retry_delay: float = DEFAULT_RETRY_DELAY):
+    def __init__(self, api_key: Optional[str] = None, max_retries: int = DEFAULT_MAX_RETRIES, retry_delay: float = DEFAULT_RETRY_DELAY, http_options = None):
         """Initialize Gemini client with API key."""
         self.api_key = api_key or os.environ.get("GEMINI_API_KEY")
         if not self.api_key:
@@ -30,7 +30,7 @@ class GeminiAPIClient:
         self.retry_delay = retry_delay
         
         try:
-            self.client = genai.Client(api_key=self.api_key)
+            self.client = genai.Client(api_key=self.api_key, http_options=http_options)
         except Exception as e:
             raise ValueError(f"Failed to initialize Gemini client: {str(e)}")
     
