@@ -24,7 +24,7 @@ class NanoBananaGeminiImageNode:
                     "default": "",
                     "tooltip": "Text prompt for image generation"
                 }),
-                "model": (["gemini-2.5-flash-image-preview", "gemini-2.5-pro", "gemini-2.5-flash"], {
+                "model": (["gemini-3-pro-image-preview", "gemini-2.5-flash-image-preview", "gemini-2.5-pro", "gemini-2.5-flash"], {
                     "default": "gemini-2.5-flash-image-preview",
                     "tooltip": "Gemini model for text or image generation"
                 }),
